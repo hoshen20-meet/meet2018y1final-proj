@@ -1,157 +1,184 @@
 import turtle
 import random
-
+turtle.shape('blank')
 t = turtle.clone()
-
-words = ('entrepreneurship','meet','nature','global warming','animals','recycle','tree','plastic', ' pollution')
+t.shape('blank')
+words = ('entrepreneurship','meet','nature','dirt' ,'global warming','atmosphere', 'animals','recycle','tree','plastic', 'pollution', 'water', 'ground')
 underscore_position = []
+
+head_drawn = False
+body_drawn = False
+hand1_drawn = False
+hand2_drawn = False
+leg1_drawn = False
+leg2_drawn = False
+eye1_drawn = False
+eye2_drawn = False
+mouth_drawn = False
 
 #user_word_input = input('enter a letter')
 #user_input = input()
 t.penup()
-t.goto(-400,0)
+t.goto(-400,-300)
 #functions here
 #secret_word chooses a random word
 secret_word = random.choice(words)
-print(secret_word)
 def words_length_underscore():
     for letter in secret_word:
-        underscore_position.append(t.pos())
-        t.pendown()
-        t.forward(20)
-        t.penup()
-        t.forward(20)
-        print(underscore_position)
+    	underscore_position.append(t.pos())
+    	t.pendown()
+    	t.forward(20)
+    	t.penup()
+    	t.forward(20)
 words_length_underscore()
 
 turtle.penup()
-turtle.goto (400,-300)
+turtle.goto (500,-300)
 turtle.pendown()
 
 #hanger
+turtle.goto (500, -300)
 turtle.goto (400, -300)
-turtle.goto (300, -300)
-turtle.goto (300, 300)
-turtle.goto (0, 300)
-turtle.goto (0, 220)
+turtle.goto (400, 300)
+turtle.goto (100, 300)
+turtle.goto (100, 220)
 global guess
 guess = input('what letter would you like to guess')
 
 def head():
 #head
-	turtle.circle(-50, 360)
+    global head_drawn
+    turtle.circle(-50, 360)
+    head_drawn = True
+
 def body():
 #for body
-	turtle.penup()
-	turtle.goto (0, 120)
-	turtle.pendown()
-	#body
-	turtle.goto (0, -110)
+    global body_drawn
+    turtle.penup()
+    turtle.goto (100, 120)
+    turtle.pendown()
+    body_drawn = True
+    #body
+    turtle.goto (100, -110)
 def hand1():
 #for hand1
-	turtle.penup()
-	turtle.goto (0, 120)
-	turtle.pendown()
-#hand1
-	turtle.goto (50, 40)
+    global hand1_drawn
+    turtle.penup()
+    turtle.goto (100, 120)
+    turtle.pendown()#hand1
+    turtle.goto (150, 40)
+    hand1_drawn = True
 def hand2():
 #for hand2
-	turtle.penup()
-	turtle.goto (0,120)
-	turtle.pendown()
-
-	#hand2
-	turtle.goto (-50, 40)
+    global hand2_drawn
+    turtle.penup()
+    turtle.goto (100,120)
+    turtle.pendown()
+    #hand2
+    turtle.goto (50, 40)
+    hand2_drawn = True
 def leg1():
 #for leg1
-	turtle.penup ()
-	turtle.goto (0, -110)
-	turtle.pendown ()
-
-#leg1
-	turtle.goto (50, -190)
+    global leg1_drawn
+    turtle.penup ()
+    turtle.goto (100, -110)
+    turtle.pendown ()#leg1
+    turtle.goto (150, -190)
+    leg1_drawn = True
 def leg2():
 #for leg2
-	turtle.penup()
-	turtle.goto ( 0, -110)
-	turtle.pendown()
-
-#leg2
-	turtle.goto (-50, -190)
+    global leg2_drawn
+    turtle.penup()
+    turtle.goto ( 100, -110)
+    turtle.pendown()
+    #leg2
+    turtle.goto (50, -190)
+    leg2_drawn = True
 def eye1():
 #for eye1
-	turtle.penup()
-	turtle.goto (-20, 190)
-	turtle.pendown()
-
+    global eye1_drawn
+    turtle.penup()
+    turtle.goto (120, 190)
+    turtle.pendown()
 #eye1
-	turtle.circle(-5, 360)
+    turtle.circle(-5, 360)
+    eye1_drawn = True
 def eye2():
 #for eye2
-	turtle.penup()
-	turtle.goto (20, 190)
-	turtle.pendown()
-
+    global eye2_drawn  
+    turtle.penup()
+    turtle.goto (80, 190)
+    turtle.pendown()
 #eye2
-	turtle.circle(-5, 360)
+    turtle.circle(-5, 360)
+    eye2_drawn = True
 
 def mouth():
 #for mouth
-	turtle.penup()
-	turtle.goto (-20, 145)
-	turtle.pendown()
-	turtle.right(-90)
-	turtle.circle(-20, 180)
+    global mouth_drawn
+    turtle.penup()
+    turtle.goto (80, 145)
+    turtle.pendown()
+    turtle.right(-90)
+    turtle.circle(-20, 180)
+    mouth_drawn = True
 
 #mouth_data = (-20, 145, -90, -20, 180)
 
 #without refactor:
 #draw_part_functions = [eye1, eye2]
-
-i = -1
-def check_letter_index():
+used_letters = []
+correct_letters = 0
+def check_letters():
 #for letter in secret_word:
     global guess
-    for index_of_letter in range(0,len(secret_word)):
+    global correct_letters
+    if guess in used_letters:
+        print('you have already guessed that letter')
+    elif not (guess) in secret_word.lower():
+        if not head_drawn:
+            head()
+        elif not body_drawn:
+            body()
+        elif not hand1_drawn:
+            hand1()
+        elif not hand2_drawn:
+            hand2()
+        elif not leg1_drawn:
+            leg1()
+        elif not leg2_drawn:
+            leg2()
+        elif not eye1_drawn:
+            eye1()
+        elif not eye2_drawn:
+            eye2()
+        elif not mouth_drawn:
+            mouth()
+            t.goto(-400,180)
+            t.write('YOU LOSE!!',font =  ('Ariel', 50, 'normal'))
+            quit()
+    else:
+        for index_of_letter in range(0,len(secret_word)):
             letter = secret_word[index_of_letter]
-            print('checking letter: '+letter)
             if letter == guess:
                 position_tuple_to_go_to = underscore_position[index_of_letter]
+                t.goto(position_tuple_to_go_to)
+                t.write(letter, font = ('Ariel', 20, 'normal'))
+                print('you are right!')
+                correct_letters += 1
                 
-                turtle.goto(position_tuple_to_go_to)
-                turtle.write(letter)
-                guess = input('enter another letter')
-            elif letter != guess:
-                head()
-                guess =input()
-                print('here')
-            elif letter != guess:
-                body()
-                guess = input()
-            elif letter != guess:
-                hand1()
-                guess = input('enter a letter')
-            elif letter != guess:        
-                hand2()
-                guess = input('enter a letter')
-            elif letter != guess:
-                leg1()
-                guess = input('enter a letter')
-            elif letter != guess:
-                leg2()
-                guess = input('enter a letter')
-            elif letter != guess:
-                eye1()
-                guess = input('enter a letter')
-            elif letter != guess:
-                eye2()
-                guess = input('enter a letter')
-            elif letter != guess:
-                mouth()
-                guess = input('enter a letter')
-            else:
-                print('you`re right')
-                
-def printhi(thing_to_print):
-	print(thing_to_print)
-check_letter_index()
+    used_letters.append(guess)
+    if (len(secret_word) == correct_letters):
+        print('YOU WON!!!')
+        t.goto(-400,180)
+        t.write('YOU WON!!!',font =  ('Ariel', 50, 'normal'))
+        quit()
+   # else:
+        
+    guess = input('Enter another letter')
+    check_letters()
+           	 
+check_letters()
+
+
+
