@@ -3,7 +3,7 @@ import random
 turtle.shape('blank')
 t = turtle.clone()
 t.shape('blank')
-words = ('entrepreneurship','meet','nature','dirt' ,'global warming','atmosphere', 'animals','recycle','tree','plastic', 'pollution', 'water', 'ground')
+words = ('entrepreneurship','meet','nature','global warming','animals','recycle','treehous','plastic', 'pollution', 'water', 'ground','toxic waist','grass','forest','enviornment','earthquake','extinct','climate')
 underscore_position = []
 
 head_drawn = False
@@ -123,8 +123,6 @@ def mouth():
     turtle.circle(-20, 180)
     mouth_drawn = True
 
-#mouth_data = (-20, 145, -90, -20, 180)
-
 #without refactor:
 #draw_part_functions = [eye1, eye2]
 used_letters = []
@@ -133,9 +131,9 @@ def check_letters():
 #for letter in secret_word:
     global guess
     global correct_letters
-    if guess in used_letters:
+    if guess.lower() in used_letters:
         print('you have already guessed that letter')
-    elif not (guess) in secret_word.lower():
+    elif not (guess.lower()) in secret_word.lower():
         if not head_drawn:
             head()
         elif not body_drawn:
@@ -155,30 +153,33 @@ def check_letters():
         elif not mouth_drawn:
             mouth()
             t.goto(-400,180)
-            t.write('YOU LOSE!!',font =  ('Ariel', 50, 'normal'))
+            t.color('red')
+            t.write('YOU LOSE!!',font =  ('Comic Sans MS', 50, 'normal'))
             quit()
     else:
         for index_of_letter in range(0,len(secret_word)):
             letter = secret_word[index_of_letter]
-            if letter == guess:
+            if letter.lower() == guess.lower():
                 position_tuple_to_go_to = underscore_position[index_of_letter]
                 t.goto(position_tuple_to_go_to)
-                t.write(letter, font = ('Ariel', 20, 'normal'))
-                print('you are right!')
+                t.write(letter, font = ('Comic Sans MS', 20, 'normal'))
+                print('YOU ARE RIGHT!')
                 correct_letters += 1
                 
-    used_letters.append(guess)
+    used_letters.append(guess.lower())
     if (len(secret_word) == correct_letters):
         print('YOU WON!!!')
         t.goto(-400,180)
-        t.write('YOU WON!!!',font =  ('Ariel', 50, 'normal'))
+        t.color('green')
+        t.write('YOU WON!!!',font =  ('Comic Sans MS', 50, 'normal'))
         quit()
    # else:
         
-    guess = input('Enter another letter')
+    guess = input('enter another letter')
     check_letters()
            	 
 check_letters()
+
 
 
 
